@@ -6,8 +6,37 @@ const uploadList = document.getElementById('uploadList');
 const errorMessage = document.getElementById('errorMessage');
 
 // Google Drive API details
-const FOLDER_ID = 'YOUR_FOLDER_ID'; // Replace with your actual Google Drive folder ID
-const ACCESS_TOKEN = 'YOUR_ACCESS_TOKEN'; // Replace with your Google Drive API access token
+const CLIENT_ID = '477947393379-vhhn7f3u3tiiahkh00h5fugtmc5cohb4.apps.googleusercontent.com'; // Replace with your actual Google API client ID
+const FOLDER_ID = '1nvkZ_De-gIi3-IAT7dPrrd2YNaRCGV2z'; // Replace with your actual Google Drive folder ID
+const SCOPES = 'https://www.googleapis.com/auth/drive.file'; // Scope for file access
+
+// Authenticate and get access token
+async function authenticate() {
+    const authWindow = window.open(
+        `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${window.location.origin}&response_type=token&scope=${SCOPES}`,
+        '_blank',
+        'width=600,height=400'
+    );
+
+    // Wait for the user to complete authentication
+    window.addEventListener('message', async (event) => {
+        if (event.origin !== window.location.origin) return; // Ensure message is from the same origin
+        const { access_token } = event.data;
+        if (access_token) {
+            localStorage.setItem('access_token', access_token); // Store access token
+            uploadButton.disabled = false; // Enable upload button
+        }
+    });
+}
+
+// Trigger authentication when the page loads
+window.onload = () => {
+    if (!localStorage.getItem('access_token')) {
+        authenticate(); // Authenticate if no access token is stored
+    } else {
+        uploadButton.disabled = false; // Enable upload button
+    }
+};
 
 uploadButton.addEventListener('click', async () => {
     const files = fileInput.files;
@@ -29,6 +58,7 @@ uploadButton.addEventListener('click', async () => {
 
 // Function to upload a file to Google Drive
 async function uploadFile(file) {
+    const ACCESS_TOKEN = localStorage.getItem('access_token'); // Get the stored access token
     const url = `https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id`;
 
     const metadata = {
