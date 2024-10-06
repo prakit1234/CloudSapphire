@@ -11,8 +11,9 @@ uploadButton.addEventListener('click', async () => {
         showError('Please select a file to upload.');
         return;
     }
-    
+
     errorMessage.textContent = ''; // Clear previous errors
+
     for (const file of files) {
         const downloadLink = await uploadFile(file);
         if (downloadLink) {
@@ -33,14 +34,23 @@ async function uploadFile(file) {
             body: formData,
         });
 
-        const data = await response.json();
+        // Check if response is OK
+        if (!response.ok) {
+            throw new Error(`HTTP Error: ${response.status}`);
+        }
 
+        const data = await response.json();
+        console.log('GoFile response:', data); // Debug response from GoFile.io
+
+        // Check if the API returned an "ok" status
         if (data.status === 'ok') {
+            console.log('File uploaded successfully:', data.data.downloadPage); // Debug download link
             return data.data.downloadPage; // Return download link
         } else {
             throw new Error(data.message || 'Failed to upload');
         }
     } catch (error) {
+        console.error('Error uploading file:', error); // More detailed logging for debugging
         showError(`Error uploading ${file.name}: ${error.message}`);
         return null;
     }
@@ -62,15 +72,21 @@ async function sendToWebhook(link) {
     };
 
     try {
-        await fetch(webhookUrl, {
+        const response = await fetch(webhookUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(payload),
         });
+
+        if (!response.ok) {
+            throw new Error(`Webhook Error: ${response.status}`);
+        }
+
+        console.log('Webhook notification sent successfully'); // Log webhook success
     } catch (error) {
-        console.error('Error sending to webhook:', error);
+        console.error('Error sending to webhook:', error); // Detailed logging for webhook errors
     }
 }
 
@@ -78,3 +94,4 @@ async function sendToWebhook(link) {
 function showError(message) {
     errorMessage.textContent = message;
 }
+
