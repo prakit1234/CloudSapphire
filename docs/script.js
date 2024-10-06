@@ -1,103 +1,80 @@
-// Discord webhook URL to receive file upload notifications
-const DISCORD_WEBHOOK_URL = 'https://ptb.discord.com/api/webhooks/1292501408746180678/SbDR8QTAt2uIl85-qPohWU7jt_nhSaI9eGJXx-LWhXxbgaV1lrikWlXcLK1XBoNO4yaX'; // Replace with your actual Discord webhook URL
-
-// Elements
 const fileInput = document.getElementById('fileInput');
 const uploadButton = document.getElementById('uploadButton');
 const uploadList = document.getElementById('uploadList');
 const errorMessage = document.getElementById('errorMessage');
+const webhookUrl = "YOUR_DISCORD_WEBHOOK_URL"; // Replace with your Discord webhook URL
 
-// Event listener for the upload button
 uploadButton.addEventListener('click', async () => {
     const files = fileInput.files;
 
-    // Check if files are selected
     if (files.length === 0) {
-        errorMessage.textContent = 'Please select a file to upload.';
+        showError('Please select a file to upload.');
         return;
-    } else {
-        errorMessage.textContent = ''; // Clear previous errors
     }
-
-    // Loop through each file and upload
+    
+    errorMessage.textContent = ''; // Clear previous errors
     for (const file of files) {
-        try {
-            const uploadResult = await uploadFile(file);
-            if (uploadResult) {
-                addFileToList(uploadResult); // Add the file link to the display list
-                await sendToDiscord(uploadResult); // Send the file link to Discord
-            }
-        } catch (error) {
-            console.error('Upload error for file:', file.name, error);
-            errorMessage.textContent += `Error uploading ${file.name}: ${error.message}\n`; // Append errors
+        const downloadLink = await uploadFile(file);
+        if (downloadLink) {
+            addFileToList(downloadLink);
+            await sendToWebhook(downloadLink);
         }
     }
 });
 
-// Function to upload a file to AnonFiles
+// Function to upload a file to GoFile.io
 async function uploadFile(file) {
-    const url = 'https://api.anonfiles.com/upload';
-
     const formData = new FormData();
-    formData.append('file', file); // Append the file to the form data
+    formData.append('file', file);
 
     try {
-        const response = await fetch(url, {
+        const response = await fetch('https://api.gofile.io/uploadFile', {
             method: 'POST',
             body: formData,
         });
 
-        // Check if the response is ok
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
         const data = await response.json();
 
-        // Check if the upload was successful
-        if (data.status) {
-            console.log(`File uploaded successfully: ${data.data.file.url.full}`); // Log success
-            return data.data.file.url.full; // Return the download link
+        if (data.status === 'ok') {
+            return data.data.downloadPage; // Return download link
         } else {
-            throw new Error('Error uploading file: ' + (data.error.message || 'Unknown error'));
+            throw new Error(data.message || 'Failed to upload');
         }
     } catch (error) {
-        console.error('Error uploading file:', error);
-        throw error; // Re-throw error for handling in the caller function
+        showError(`Error uploading ${file.name}: ${error.message}`);
+        return null;
     }
 }
 
-// Function to send the uploaded file link to Discord
-async function sendToDiscord(link) {
+// Function to display the file download link
+function addFileToList(link) {
+    const fileLink = document.createElement('a');
+    fileLink.href = link;
+    fileLink.target = '_blank';
+    fileLink.textContent = link;
+    uploadList.appendChild(fileLink);
+}
+
+// Function to send the download link to a Discord webhook
+async function sendToWebhook(link) {
     const payload = {
-        content: `A new file has been uploaded: ${link}`,
+        content: `New file uploaded: ${link}`,
     };
 
     try {
-        const response = await fetch(DISCORD_WEBHOOK_URL, {
+        await fetch(webhookUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(payload),
         });
-
-        // Check if the response from Discord is ok
-        if (!response.ok) {
-            throw new Error(`Error sending to Discord: ${response.statusText}`);
-        }
-        console.log('File link sent to Discord successfully.'); // Log success
     } catch (error) {
-        console.error('Error sending to Discord:', error);
+        console.error('Error sending to webhook:', error);
     }
 }
 
-// Function to add uploaded file link to the list
-function addFileToList(link) {
-    const fileLink = document.createElement('a');
-    fileLink.href = link; // Set the href to the uploaded file's link
-    fileLink.target = '_blank'; // Open link in new tab
-    fileLink.textContent = link; // Set link text
-    uploadList.appendChild(fileLink); // Append the link to the upload list
+// Function to show error messages
+function showError(message) {
+    errorMessage.textContent = message;
 }
-
