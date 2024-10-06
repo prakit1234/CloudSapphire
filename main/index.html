@@ -4,78 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CloudSapphire with File.io</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 50px auto;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-
-        p {
-            text-align: center;
-            color: #666;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        input[type="file"] {
-            margin-bottom: 20px;
-        }
-
-        button {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        .upload-list {
-            margin-top: 20px;
-        }
-
-        .upload-list a {
-            display: block;
-            margin: 5px 0;
-            color: #007BFF;
-            text-decoration: none;
-        }
-
-        .upload-list a:hover {
-            text-decoration: underline;
-        }
-
-        .error-message {
-            color: red;
-            text-align: center;
-            margin-top: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -92,43 +21,7 @@
     <div class="error-message" id="errorMessage"></div>
 </div>
 
-<script>
-    function uploadFile() {
-        const fileInput = document.getElementById('fileInput');
-        const file = fileInput.files[0];
-        const errorMessage = document.getElementById('errorMessage');
-        const uploadList = document.getElementById('uploadList');
-        errorMessage.textContent = '';  // Clear previous errors
-        uploadList.innerHTML = '';      // Clear previous uploads
-
-        if (!file) {
-            errorMessage.textContent = 'Please select a file to upload.';
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('file', file);
-
-        fetch('https://file.io', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                const fileLink = document.createElement('a');
-                fileLink.href = data.link;
-                fileLink.textContent = 'Download your file here';
-                uploadList.appendChild(fileLink);
-            } else {
-                throw new Error(data.message || 'Upload failed');
-            }
-        })
-        .catch(error => {
-            errorMessage.textContent = 'Error uploading file: ' + error.message;
-        });
-    }
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
