@@ -1,34 +1,11 @@
-// Google Drive API details
-const FOLDER_ID = 'YOUR_FOLDER_ID'; // Replace with your actual Google Drive folder ID
-const CLIENT_ID = 'YOUR_CLIENT_ID'; // Replace with your Google API Client ID
-const REDIRECT_URI = 'http://localhost:8080'; // Make sure this matches the redirect URI in Google Cloud Console
-
-let ACCESS_TOKEN = ''; // This will hold your access token
-
-// Function to authorize and get the access token
-function authorize() {
-    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/drive.file&access_type=offline&include_granted_scopes=true&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&client_id=${CLIENT_ID}`;
-    window.location.href = authUrl;
-}
-
-// Check if we have an access token in the URL after redirect
-if (window.location.hash) {
-    const hashParams = new URLSearchParams(window.location.hash.slice(1));
-    ACCESS_TOKEN = hashParams.get('access_token');
-    window.history.replaceState({}, document.title, window.location.pathname); // Clear the URL
-}
-
-if (!ACCESS_TOKEN) {
-    authorize();
-}
+// Discord webhook URL to receive file upload notifications
+const DISCORD_WEBHOOK_URL = 'YOUR_DISCORD_WEBHOOK_URL'; // Replace with your actual Discord webhook URL
 
 // Elements
 const fileInput = document.getElementById('fileInput');
 const uploadButton = document.getElementById('uploadButton');
 const uploadList = document.getElementById('uploadList');
 const errorMessage = document.getElementById('errorMessage');
-const progressBar = document.getElementById('progressBar');
-const progress = document.getElementById('progress');
 
 uploadButton.addEventListener('click', async () => {
     const files = fileInput.files;
@@ -44,41 +21,53 @@ uploadButton.addEventListener('click', async () => {
         const uploadResult = await uploadFile(file);
         if (uploadResult) {
             addFileToList(uploadResult);
+            await sendToDiscord(uploadResult);
         }
     }
 });
 
-// Function to upload a file to Google Drive
+// Function to upload a file to AnonFiles
 async function uploadFile(file) {
-    const url = `https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id`;
+    const url = 'https://api.anonfiles.com/upload';
 
-    const metadata = {
-        name: file.name,
-        mimeType: file.type,
-        parents: [FOLDER_ID]
-    };
-
-    const form = new FormData();
-    form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
-    form.append('file', file);
+    const formData = new FormData();
+    formData.append('file', file);
 
     try {
         const response = await fetch(url, {
             method: 'POST',
-            headers: new Headers({ 'Authorization': `Bearer ${ACCESS_TOKEN}` }),
-            body: form
+            body: formData,
         });
 
-        if (!response.ok) {
-            throw new Error('Error uploading file');
-        }
-
         const data = await response.json();
-        return `https://drive.google.com/file/d/${data.id}/view`; // Return the file link
+        if (data.status) {
+            return data.data.file.url.full; // Return the download link
+        } else {
+            throw new Error('Error uploading file: ' + data.error.message);
+        }
     } catch (error) {
         console.error('Error uploading file:', error);
         errorMessage.textContent = 'Error uploading file. Please try again.';
         return null;
+    }
+}
+
+// Function to send the uploaded file link to Discord
+async function sendToDiscord(link) {
+    const payload = {
+        content: `A new file has been uploaded: ${link}`,
+    };
+
+    try {
+        await fetch(DISCORD_WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+        });
+    } catch (error) {
+        console.error('Error sending to Discord:', error);
     }
 }
 
