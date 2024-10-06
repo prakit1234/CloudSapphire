@@ -1,70 +1,99 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
 }
 
 .container {
-    max-width: 600px;
-    margin: 50px auto;
+    max-width: 800px;
+    margin: 30px auto;
     background-color: #fff;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
 }
 
-h1 {
+header {
     text-align: center;
-    color: #333;
-}
-
-p {
-    text-align: center;
-    color: #666;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-input[type="file"] {
     margin-bottom: 20px;
 }
 
+h1 {
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 28px;
+    color: #007BFF;
+    margin-top: 30px;
+}
+
+p {
+    color: #666;
+    line-height: 1.5;
+}
+
+input[type="file"] {
+    margin: 15px 0;
+}
+
 button {
+    padding: 12px 25px;
     background-color: #007BFF;
     color: white;
     border: none;
-    padding: 10px 20px;
-    font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
     background-color: #0056b3;
 }
 
-.upload-list {
+.upload-section {
     margin-top: 20px;
+}
+
+.upload-list {
+    margin-top: 10px;
+    border-top: 2px solid #007BFF;
+    padding-top: 10px;
 }
 
 .upload-list a {
     display: block;
-    margin: 5px 0;
+    margin: 10px 0;
     color: #007BFF;
     text-decoration: none;
+    padding: 8px;
+    border: 1px solid #007BFF;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .upload-list a:hover {
-    text-decoration: underline;
+    background-color: #007BFF;
+    color: white;
+}
+
+.error-section {
+    margin-top: 20px;
 }
 
 .error-message {
     color: red;
+    font-weight: bold;
     text-align: center;
-    margin-top: 20px;
+    margin: 10px 0;
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 14px;
+    color: #666;
 }
