@@ -1,42 +1,34 @@
-// script.js
+// Google Drive API details
+const FOLDER_ID = 'YOUR_FOLDER_ID'; // Replace with your actual Google Drive folder ID
+const CLIENT_ID = 'YOUR_CLIENT_ID'; // Replace with your Google API Client ID
+const REDIRECT_URI = 'http://localhost:8080'; // Make sure this matches the redirect URI in Google Cloud Console
 
+let ACCESS_TOKEN = ''; // This will hold your access token
+
+// Function to authorize and get the access token
+function authorize() {
+    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/drive.file&access_type=offline&include_granted_scopes=true&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=token&client_id=${CLIENT_ID}`;
+    window.location.href = authUrl;
+}
+
+// Check if we have an access token in the URL after redirect
+if (window.location.hash) {
+    const hashParams = new URLSearchParams(window.location.hash.slice(1));
+    ACCESS_TOKEN = hashParams.get('access_token');
+    window.history.replaceState({}, document.title, window.location.pathname); // Clear the URL
+}
+
+if (!ACCESS_TOKEN) {
+    authorize();
+}
+
+// Elements
 const fileInput = document.getElementById('fileInput');
 const uploadButton = document.getElementById('uploadButton');
 const uploadList = document.getElementById('uploadList');
 const errorMessage = document.getElementById('errorMessage');
-
-// Google Drive API details
-const CLIENT_ID = '477947393379-vhhn7f3u3tiiahkh00h5fugtmc5cohb4.apps.googleusercontent.com'; // Replace with your actual Google API client ID
-const FOLDER_ID = '1nvkZ_De-gIi3-IAT7dPrrd2YNaRCGV2z'; // Replace with your actual Google Drive folder ID
-const SCOPES = 'https://www.googleapis.com/auth/drive.file'; // Scope for file access
-
-// Authenticate and get access token
-async function authenticate() {
-    const authWindow = window.open(
-        `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${window.location.origin}&response_type=token&scope=${SCOPES}`,
-        '_blank',
-        'width=600,height=400'
-    );
-
-    // Wait for the user to complete authentication
-    window.addEventListener('message', async (event) => {
-        if (event.origin !== window.location.origin) return; // Ensure message is from the same origin
-        const { access_token } = event.data;
-        if (access_token) {
-            localStorage.setItem('access_token', access_token); // Store access token
-            uploadButton.disabled = false; // Enable upload button
-        }
-    });
-}
-
-// Trigger authentication when the page loads
-window.onload = () => {
-    if (!localStorage.getItem('access_token')) {
-        authenticate(); // Authenticate if no access token is stored
-    } else {
-        uploadButton.disabled = false; // Enable upload button
-    }
-};
+const progressBar = document.getElementById('progressBar');
+const progress = document.getElementById('progress');
 
 uploadButton.addEventListener('click', async () => {
     const files = fileInput.files;
@@ -58,7 +50,6 @@ uploadButton.addEventListener('click', async () => {
 
 // Function to upload a file to Google Drive
 async function uploadFile(file) {
-    const ACCESS_TOKEN = localStorage.getItem('access_token'); // Get the stored access token
     const url = `https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id`;
 
     const metadata = {
@@ -78,6 +69,10 @@ async function uploadFile(file) {
             body: form
         });
 
+        if (!response.ok) {
+            throw new Error('Error uploading file');
+        }
+
         const data = await response.json();
         return `https://drive.google.com/file/d/${data.id}/view`; // Return the file link
     } catch (error) {
@@ -95,4 +90,5 @@ function addFileToList(link) {
     fileLink.textContent = link;
     uploadList.appendChild(fileLink);
 }
+
 
