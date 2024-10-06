@@ -3,22 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CloudSapphire with File.io</title>
+    <title>CloudSapphire - Store & Share Files</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <div class="container">
-    <h1>CloudSapphire with File.io</h1>
-    <p>A secure and convenient platform for storing, sharing, and collaborating on your files.</p>
-    
-    <form id="uploadForm">
-        <input type="file" id="fileInput" name="file">
-        <button type="button" onclick="uploadFile()">Upload</button>
-    </form>
+    <header>
+        <h1>CloudSapphire</h1>
+        <p>Welcome to CloudSapphire! A secure platform for storing and sharing your files.</p>
+    </header>
 
-    <div class="upload-list" id="uploadList"></div>
-    <div class="error-message" id="errorMessage"></div>
+    <section id="user-info">
+        <h2>Upload Your Files</h2>
+        <p>Please upload your files to our secure cloud storage.</p>
+        <input type="file" id="fileInput" multiple>
+        <button id="uploadButton">Upload</button>
+    </section>
+
+    <section class="upload-section">
+        <h2>Your Uploads</h2>
+        <div class="upload-list" id="uploadList">
+            <!-- Uploaded files will be shown here -->
+        </div>
+    </section>
+
+    <section class="error-section">
+        <div class="error-message" id="errorMessage"></div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 CloudSapphire. All rights reserved.</p>
+        <p>Contact: support@cloudsapphire.com</p>
+    </footer>
 </div>
 
 <script src="script.js"></script>
