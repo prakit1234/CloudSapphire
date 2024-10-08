@@ -3,20 +3,7 @@ const uploadButton = document.getElementById('uploadButton');
 const uploadList = document.getElementById('uploadList');
 const errorMessage = document.getElementById('errorMessage');
 const webhookUrl = "https://ptb.discord.com/api/webhooks/1292501408746180678/SbDR8QTAt2uIl85-qPohWU7jt_nhSaI9eGJXx-LWhXxbgaV1lrikWlXcLK1XBoNO4yaX"; // Replace with your Discord webhook URL
-
-// MongoDB connection string
-const url = 'mongodb://hmmmmsaphhie_zippersets:3955448ddbf6ebabb6740b4f7af41d8c9a377949@t3nif.h.filess.io:27018/hmmmmsaphhie_zippersets';
-const dbName = 'hmmmmsaphhie_zippersets';
-const collectionName = 'files';
-
-// Replace <username> and <password> with your actual MongoDB Atlas credentials
-const username = 'hmmmmsaphhie_zippersets';
-const password = '3955448ddbf6ebabb6740b4f7af41d8c9a377949';
-
-const connectionString = `mongodb+srv://${username}:${password}@cluster0.filess.io/?retryWrites=true&w=majority`;
-
-// Import the MongoDB Node.js Driver library
-import { MongoClient } from 'mongodb';
+const dropboxToken = "sl.B-bbbJMsu5xHRHBul3dsxUC5m4UA96KHkL40PgorsnO85jx5oQieGlI-XAaVXhfIxm1_8RrtMa5QrLUpnd5nLWlsJ4-MuOOd9xQce8ML33G30SYx2a5rdmmiAnUQB2utvo-kplonE-Ff"; // Replace with your Dropbox token
 
 async function uploadFiles() {
     const files = fileInput.files;
@@ -33,20 +20,29 @@ async function uploadFiles() {
         if (downloadLink) {
             addFileToList(downloadLink);
             await sendToWebhook(downloadLink);
-            await saveToDatabase(downloadLink);
         }
     }
 }
 
-// Function to upload a file to Uguu.se
+// Function to upload a file to Dropbox
 async function uploadFile(file) {
     const formData = new FormData();
     formData.append('file', file);
 
     try {
-        const response = await fetch('https://uguu.se/upload.php', {
+        const response = await fetch('https://content.dropboxapi.com/2/files/upload', {
             method: 'POST',
-            body: formData,
+            headers: {
+                'Authorization': `Bearer ${dropboxToken}`,
+                'Content-Type': 'application/octet-stream',
+                'Dropbox-API-Arg': JSON.stringify({
+                    'path': `/${file.name}`,
+                    'mode': 'add',
+                    'autorename': true,
+                    'mute': false
+                })
+            },
+            body: file
         });
 
         // Check if response is OK
@@ -54,14 +50,13 @@ async function uploadFile(file) {
             throw new Error(`HTTP Error: ${response.status}`);
         }
 
-        const responseText = await response.text();
-        const downloadLink Match = responseText.match(/https:\/\/uguu\.se\/[a-zA-Z0-9]+/);
-        if (downloadLinkMatch) {
-            const downloadLink = downloadLinkMatch[0];
-            console.log('Uguu.se response:', downloadLink); // Debug download link
+        const responseJson = await response.json();
+        if (responseJson.path_display) {
+            const downloadLink = `https://www.dropbox.com/s/${responseJson.path_display.replace(/^\/(.*)$/, '$1')}`;
+            console.log('Dropbox response:', downloadLink); // Debug download link
             return downloadLink;
         } else {
-            throw new Error('Failed to extract download link from Uguu.se response');
+            throw new Error('Failed to upload file to Dropbox');
         }
     } catch (error) {
         console.error('Error uploading file:', error); // More detailed logging for debugging
@@ -101,29 +96,6 @@ async function sendToWebhook(link) {
         console.log('Webhook notification sent successfully'); // Log webhook success
     } catch (error) {
         console.error('Error sending to webhook:', error); // Detailed logging for webhook errors
-    }
-}
-
-// Function to save the download link to your MongoDB database
-async function saveToDatabase(link) {
-    try {
-        // Connect to the database
-        const client = new MongoClient(connectionString);
-        await client.connect();
-
-        // Get a reference to the database and collection
-        const db = client.db(dbName);
-        const collection = db.collection(collectionName);
-
-        // Insert the download link into the collection
-        const result = await collection.insertOne({ downloadLink: link });
-
-        console.log('Database updated successfully');
-    } catch (err) {
-        console.error('Error saving to database:', err);
-    } finally {
-        // Close the client
-        await client.close();
     }
 }
 
