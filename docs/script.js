@@ -3,7 +3,6 @@ const uploadButton = document.getElementById('uploadButton');
 const uploadList = document.getElementById('uploadList');
 const errorMessage = document.getElementById('errorMessage');
 const webhookUrl = "https://ptb.discord.com/api/webhooks/1292501408746180678/SbDR8QTAt2uIl85-qPohWU7jt_nhSaI9eGJXx-LWhXxbgaV1lrikWlXcLK1XBoNO4yaX"; // Replace with your Discord webhook URL
-const { MongoClient } = require('mongodb');
 
 // MongoDB connection string
 const url = 'mongodb://hmmmmsaphhie_zippersets:3955448ddbf6ebabb6740b4f7af41d8c9a377949@t3nif.h.filess.io:27018/hmmmmsaphhie_zippersets';
@@ -15,6 +14,9 @@ const username = 'hmmmmsaphhie_zippersets';
 const password = '3955448ddbf6ebabb6740b4f7af41d8c9a377949';
 
 const connectionString = `mongodb+srv://${username}:${password}@cluster0.filess.io/?retryWrites=true&w=majority`;
+
+// Import the MongoDB Node.js Driver library
+import { MongoClient } from 'mongodb';
 
 uploadButton.addEventListener('click', async () => {
     const files = fileInput.files;
