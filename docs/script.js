@@ -18,7 +18,7 @@ const connectionString = `mongodb+srv://${username}:${password}@cluster0.filess.
 // Import the MongoDB Node.js Driver library
 import { MongoClient } from 'mongodb';
 
-uploadButton.addEventListener('click', async () => {
+async function uploadFiles() {
     const files = fileInput.files;
 
     if (files.length === 0) {
@@ -36,7 +36,7 @@ uploadButton.addEventListener('click', async () => {
             await saveToDatabase(downloadLink);
         }
     }
-});
+}
 
 // Function to upload a file to Uguu.se
 async function uploadFile(file) {
@@ -55,7 +55,7 @@ async function uploadFile(file) {
         }
 
         const responseText = await response.text();
-        const downloadLinkMatch = responseText.match(/https:\/\/uguu\.se\/[a-zA-Z0-9]+/);
+        const downloadLink Match = responseText.match(/https:\/\/uguu\.se\/[a-zA-Z0-9]+/);
         if (downloadLinkMatch) {
             const downloadLink = downloadLinkMatch[0];
             console.log('Uguu.se response:', downloadLink); // Debug download link
