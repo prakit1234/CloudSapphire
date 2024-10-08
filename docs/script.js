@@ -25,6 +25,11 @@ uploadButton.addEventListener('click', async () => {
       method: 'POST',
       body: formData,
       timeout: uploadTimeout,
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Accept': 'application/json',
+        'Content-Type': 'multipart/form-data',
+      },
     });
 
     if (!response.ok) {
@@ -39,47 +44,52 @@ uploadButton.addEventListener('click', async () => {
     const downloadLink = responseJson.link;
     console.log('File.io response:', downloadLink); // Debug download link
 
-    const webhookPayload = {
-      content: `New file uploaded: ${downloadLink}`,
-      embeds: [
-        {
-          title: file.name,
-          description: `File uploaded by ${fileInput.value}`,
-          fields: [
-            {
-              name: 'File Size',
-              value: `${(file.size / (1024 * 1024)).toFixed(2)} MB`,
-              inline: true,
+    try {
+      const webhookPayload = JSON.stringify({
+        content: `New file uploaded: ${downloadLink}`,
+        embeds: [
+          {
+            title: file.name,
+            description: `File uploaded by ${fileInput.value}`,
+            fields: [
+              {
+                name: 'File Size',
+                value: `${(file.size / (1024 * 1024)).toFixed(2)} MB`,
+                inline: true,
+              },
+              {
+                name: 'File Type',
+                value: file.type,
+                inline: true,
+              },
+            ],
+            footer: {
+              text: `Uploaded at ${new Date().toLocaleString()}`,
             },
-            {
-              name: 'File Type',
-              value: file.type,
-              inline: true,
-            },
-          ],
-          footer: {
-            text: `Uploaded at ${new Date().toLocaleString()}`,
           },
+        ],
+      });
+
+      const webhookResponse = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      ],
-    };
+        body: webhookPayload,
+      });
 
-    const webhookResponse = await fetch(webhookUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(webhookPayload),
-    });
+      if (!webhookResponse.ok) {
+        throw new Error(`Webhook Error: ${webhookResponse.status}`);
+      }
 
-    if (!webhookResponse.ok) {
-      throw new Error(`Webhook Error: ${webhookResponse.status}`);
+      console.log('Webhook notification sent successfully'); // Log webhook success
+
+      const webhookResponseJson = await webhookResponse.json();
+      console.log('Webhook response:', webhookResponseJson); // Debug webhook response
+    } catch (error) {
+      console.error('Error sending webhook notification:', error); // More detailed logging for debugging
+      alert(`Error sending webhook notification: ${error.message}`);
     }
-
-    console.log('Webhook notification sent successfully'); // Log webhook success
-
-    const webhookResponseJson = await webhookResponse.json();
-    console.log('Webhook response:', webhookResponseJson); // Debug webhook response
   } catch (error) {
     console.error('Error uploading file:', error); // More detailed logging for debugging
     alert(`Error uploading file: ${error.message}`);
