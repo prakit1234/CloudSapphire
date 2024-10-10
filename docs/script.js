@@ -48,23 +48,21 @@ function handleFileUpload() {
     // Check if the server returned JSON or plain text
     if (xhr.status === 200) {
       let downloadLink;
-      if (selectedService === 'ufile') {
-        try {
+      try {
+        if (selectedService === 'ufile') {
           const responseJson = JSON.parse(xhr.responseText);
           downloadLink = responseJson.download_link || 'Link not found';
-        } catch (error) {
-          showError(`Unexpected response format: ${error.message}`);
-          return;
+        } else if (selectedService === 'krakenfiles') {
+          const responseJson = JSON.parse(xhr.responseText);
+          downloadLink = responseJson.download || 'Link not found'; // Adjust based on actual response format
         }
-      } else if (selectedService === 'krakenfiles') {
-        // For KrakenFiles, you'll need to parse the response accordingly.
-        // This is a placeholder since KrakenFiles response format should be checked.
-        downloadLink = 'Extracted link from KrakenFiles response'; // Placeholder
-      }
 
-      addFileToList(downloadLink, file.name, file.size);
-      await sendWebhookNotificationWithRetries(downloadLink);
-      updateFileCountAndSize();
+        addFileToList(downloadLink, file.name, file.size);
+        await sendWebhookNotificationWithRetries(downloadLink);
+        updateFileCountAndSize();
+      } catch (error) {
+        showError(`Unexpected response format: ${error.message}`);
+      }
     } else {
       console.error('Unexpected server response:', xhr.responseText);
       showError('The server returned an unexpected response. Please check the upload URL or try again later.');
