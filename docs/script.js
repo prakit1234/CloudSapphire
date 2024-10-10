@@ -1,4 +1,3 @@
-
 const fileInput = document.getElementById('fileInput');
 const uploadButton = document.getElementById('uploadButton');
 const uploadList = document.getElementById('uploadList');
@@ -10,7 +9,7 @@ const totalSize = document.getElementById('totalSize');
 
 let uploadQueue = [];
 let currentUpload = null;
-let uploadedFiles = JSON.parse(sessionStorage.getItem('uploadedFiles')) || [];
+let uploadedFiles = [];
 
 // Function to handle file upload
 async function handleFileUpload() {
@@ -144,16 +143,16 @@ function addFileToList(link) {
 
     const fileLink = document.createElement('a');
     fileLink.href = link;
-    fileLink .target = '_blank';
+    fileLink.target = '_blank';
     fileLink.textContent = link;
 
-    const fileDeleteButton = document.createElement('button');
+ const fileDeleteButton = document.createElement('button');
     fileDeleteButton.textContent = 'Delete';
     fileDeleteButton.onclick = () => {
         const index = uploadedFiles.findIndex((file) => file.link === link);
         if (index !== -1) {
             uploadedFiles.splice(index, 1);
-            sessionStorage.setItem('uploadedFiles', JSON.stringify(uploadedFiles));
+            sessionStorage.setItem('uploadedFiles', JSON.stringify(uploadedFiles.map((file) => ({ name: file.name, size: file.size, link: file.link }))));
             updateFileCountAndSize();
             fileCard.remove();
         }
@@ -164,16 +163,20 @@ function addFileToList(link) {
     uploadList.appendChild(fileCard);
 }
 
-// Function to show error messages
+// Function to show error message
 function showError(message) {
     errorMessage.textContent = message;
+    errorMessage.style.display = 'block';
 }
 
-// Add event listener to upload button
-uploadButton.addEventListener('click', handleFileUpload);
-
 // Initialize uploaded files
-uploadedFiles.forEach((file) => {
-    addFileToList(file.link);
-});
+if (sessionStorage.getItem('uploadedFiles')) {
+    uploadedFiles = JSON.parse(sessionStorage.getItem('uploadedFiles')).map((file) => ({ name: file.name, size: file.size, link: file.link }));
+    uploadedFiles.forEach((file) => {
+        addFileToList(file.link);
+    });
+}
+
 updateFileCountAndSize();
+
+uploadButton.addEventListener('click', handleFileUpload);
