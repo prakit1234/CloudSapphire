@@ -69,48 +69,34 @@ p {
     margin: 10px 0;
 }
 
-#queueList {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-#queueList li {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-}
-
-#queueList li:last-child {
-    border-bottom: none;
-}
-
-#upload-list-section {
+#uploadList {
+    display: flex;
+    flex-direction: column;
     margin-top: 20px;
 }
 
-#uploadList {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
 .file-card {
-    margin: 10px;
+    margin: 10px 0;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 10px;
-    box-shadow:  0 0 10px rgba(0, 0, 0, 0.1);
-    width: calc(33.33% - 20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9f9f9;
 }
 
 .file-card a {
     color: #007BFF;
     text-decoration: none;
+    flex-grow: 1; /* Allow link to grow */
+    margin-right: 10px; /* Space between link and delete button */
 }
 
-.file-card button {
+.delete-button {
     padding: 5px 10px;
-    background-color: #007BFF;
+    background-color: red; /* Red background */
     color: white;
     border: none;
     border-radius: 5px;
@@ -118,17 +104,18 @@ p {
     transition: background-color 0.3s ease;
 }
 
-.file-card button:hover {
-    background-color: #0056b3;
+.delete-button:hover {
+    background-color: darkred; /* Darker shade on hover */
 }
 
 #error-section {
     margin-top: 20px;
 }
 
-#error-message {
+#errorMessage {
     color: red;
     font-weight: bold;
+    display: none; /* Hidden by default */
 }
 
 footer {
@@ -140,5 +127,6 @@ footer {
 }
 
 footer p {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
+
