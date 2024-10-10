@@ -27,20 +27,15 @@
             <h2>Upload Your Files</h2>
             <p>Please upload your files to our secure cloud storage.</p>
             <input type="file" id="fileInput" multiple>
-            <button id="uploadButton" onclick="handleFileUpload()">Upload</button>
+            <button id="uploadButton">Upload</button>
             <progress id="progressBar" value="0" max="100"></progress>
             <p id="fileCount"></p>
             <p id="totalSize"></p>
-            <ul id="queueList"></ul>
-        </section>
-
-        <section id="upload-list-section">
-            <h2>Your Uploads</h2>
             <div id="uploadList"></div>
         </section>
 
         <section id="error-section">
-            <div id="errorMessage"></div>
+            <div id="errorMessage" style="display:none;"></div>
         </section>
 
         <footer>
