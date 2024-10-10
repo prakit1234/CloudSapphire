@@ -8,49 +8,47 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-
-<div class="container">
-    <header>
-        <div style="display: flex; align-items: center; justify-content: space-between;">
-            <!-- Logo in the top left corner -->
-            <img src="https://generated-assets.prod.myninja.ai/296b81c6-e91d-418a-9582-ec1771bf02c4/9622aafc-88ed-48ff-a652-1b06298a6b40_2.jpeg" alt="Logo" style="height: 50px;">
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="https://generated-assets.prod.myninja.ai/296b81c6-e91d-418a-9582-ec1771bf02c4/9622aafc-88ed-48ff-a652-1b06298a6b40_2.jpeg" alt="Logo" style="height: 50px;">
+            </div>
             <h1>CloudSapphire</h1>
-        </div>
-        <p>Welcome to CloudSapphire! A secure platform for storing and sharing your files.</p>
-    </header>
+            <p>Welcome to CloudSapphire! A secure platform for storing and sharing your files.</p>
+        </header>
 
-    <!-- Message to the user about ads -->
-    <section id="ad-warning">
-        <p style="color:red; font-weight:bold;">
-            Note: Our site may contain ads. We recommend using an ad blocker for a smoother experience.
-        </p>
-    </section>
+        <section id="ad-warning">
+            <p style="color:red; font-weight:bold;">
+                Note: Our site may contain ads. We recommend using an ad blocker for a smoother experience.
+            </p>
+        </section>
 
-    <section id="user-info">
-        <h2>Upload Your Files</h2>
-        <p>Please upload your files to our secure cloud storage.</p>
-        <input type="file" id="fileInput" multiple>
-        <button id="uploadButton" onclick="uploadFiles()">Upload</button>
-    </section>
+        <section id="upload-section">
+            <h2>Upload Your Files</h2>
+            <p>Please upload your files to our secure cloud storage.</p>
+            <input type="file" id="fileInput" multiple>
+            <button id="uploadButton" onclick="handleFileUpload()">Upload</button>
+            <progress id="progressBar" value="0" max="100"></progress>
+            <p id="fileCount"></p>
+            <p id="totalSize"></p>
+            <ul id="queueList"></ul>
+        </section>
 
-    <section class="upload-section">
-        <h2>Your Uploads</h2>
-        <div class="upload-list" id="uploadList">
-            <!-- Uploaded files will be shown here -->
-        </div>
-    </section>
+        <section id="upload-list-section">
+            <h2>Your Uploads</h2>
+            <div id="uploadList"></div>
+        </section>
 
-    <section class="error-section">
-        <div class="error-message" id="errorMessage"></div>
-    </section>
+        <section id="error-section">
+            <div id="errorMessage"></div>
+        </section>
 
-    <footer>
-        <p>&copy; 2024 CloudSapphire. All rights reserved.</p>
-        <p>Contact: support@cloudsapphire.com</p>
-    </footer>
-</div>
+        <footer>
+            <p>&copy; 2024 CloudSapphire. All rights reserved.</p>
+            <p>Contact: support@cloudsapphire.com</p>
+        </footer>
+    </div>
 
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
 </html>
