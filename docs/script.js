@@ -144,15 +144,15 @@ function addFileToList(link) {
     const fileLink = document.createElement('a');
     fileLink.href = link;
     fileLink.target = '_blank';
-    fileLink.textContent = link;
+    fileLink.textContent = link ;
 
- const fileDeleteButton = document.createElement('button');
+    const fileDeleteButton = document.createElement('button');
     fileDeleteButton.textContent = 'Delete';
     fileDeleteButton.onclick = () => {
         const index = uploadedFiles.findIndex((file) => file.link === link);
         if (index !== -1) {
             uploadedFiles.splice(index, 1);
-            sessionStorage.setItem('uploadedFiles', JSON.stringify(uploadedFiles.map((file) => ({ name: file.name, size: file.size, link: file.link }))));
+            sessionStorage.setItem('uploadedFiles', JSON.stringify(uploadedFiles));
             updateFileCountAndSize();
             fileCard.remove();
         }
@@ -171,12 +171,10 @@ function showError(message) {
 
 // Initialize uploaded files
 if (sessionStorage.getItem('uploadedFiles')) {
-    uploadedFiles = JSON.parse(sessionStorage.getItem('uploadedFiles')).map((file) => ({ name: file.name, size: file.size, link: file.link }));
+    uploadedFiles = JSON.parse(sessionStorage.getItem('uploadedFiles'));
     uploadedFiles.forEach((file) => {
         addFileToList(file.link);
     });
 }
-
-updateFileCountAndSize();
 
 uploadButton.addEventListener('click', handleFileUpload);
