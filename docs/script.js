@@ -93,6 +93,41 @@ function formatFileSize(size) {
   }
 }
 
+// Function to add file to local storage
+function addFileToLocalStorage(file) {
+  const storedFiles = localStorage.getItem('files');
+  if (storedFiles) {
+    const files = JSON.parse(storedFiles);
+    files.push(file);
+    localStorage.setItem('files', JSON.stringify(files));
+  } else {
+    localStorage.setItem('files', JSON.stringify([file]));
+  }
+}
+
+// Function to get all files from local storage
+function getAllFilesFromLocalStorage() {
+  const storedFiles = localStorage.getItem('files');
+  if (storedFiles) {
+    return JSON.parse(storedFiles);
+  } else {
+    return [];
+  }
+}
+
+// Function to remove file from local storage
+function removeFileFromLocalStorage(fileLink) {
+  const storedFiles = localStorage.getItem('files');
+  if (storedFiles) {
+    const files = JSON.parse(storedFiles);
+    const index = files.findIndex((file) => file.link === fileLink);
+    if (index !== -1) {
+      files.splice(index, 1);
+      localStorage.setItem('files', JSON.stringify(files));
+    }
+  }
+}
+
 // Function to add file to upload list
 function addFileToList(link, name, size) {
   // Create file card
@@ -109,12 +144,8 @@ function addFileToList(link, name, size) {
   const fileDeleteButton = document.createElement('button');
   fileDeleteButton.textContent = 'Delete';
   fileDeleteButton.onclick = () => {
-    const index = uploadedFiles.findIndex((file) => file.link === link);
-    if (index !== -1) {
-      uploadedFiles.splice(index, 1);
-      updateFileCountAndSize();
-      fileCard.remove();
-    }
+    removeFileFromLocalStorage(link);
+    fileCard.remove();
   };
 
   // Add file link and delete button to file card
@@ -124,40 +155,17 @@ function addFileToList(link, name, size) {
   // Add file card to upload list
   uploadList.appendChild(fileCard);
 
-  // Add file to uploaded files array
-  uploadedFiles.push({ name, size, link });
-}
-// Function to send webhook notification
-async function sendWebhookNotification(downloadLink) {
-  try {
-    const response = await fetch('https://ptb.discord.com/api/webhooks/1292501408746180678/SbDR8QTAt2uIl85-qPohWU7jt_nhSaI9eGJXx-LWhXxbgaV1lrikWlXcLK1XBoNO4yaX', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        content: `New file uploaded: ${downloadLink}`,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Webhook Error: ${response.status}`);
-    }
-
-    console.log('Webhook notification sent successfully'); // Log webhook success
-  } catch (error) {
-    console.error('Error sending webhook notification:', error); // Detailed logging for webhook errors
-  }
+  // Add file to local storage
+  addFileToLocalStorage({ name, size, link });
 }
 
-// Function to show error messages
-function showError(message) {
-  errorMessage.textContent = message;
-  errorMessage.style.display = 'block';
+// Function to display all files
+function displayAllFiles() {
+  const files = getAllFilesFromLocalStorage();
+  files.forEach((file) => {
+    addFileToList(file.link, file.name, file.size);
+  });
 }
-
-// Add event listener to upload button
-uploadButton.addEventListener('click', handleFileUpload);
 
 // Function to handle multiple file uploads
 function handleMultipleFileUpload() {
@@ -244,5 +252,36 @@ async function uploadNextFile() {
   }
 }
 
-// Add event listener to file input
+// Function to send webhook notification
+async function sendWebhookNotification(downloadLink) {
+  try {
+    // Send webhook request
+    const response = await fetch('https://ptb.discord.com/api/webhooks/1292501408746180678/SbDR8QTAt2uIl85-qPohWU7jt_nhSaI9eGJXx-LWhXxbgaV1lrikWlXcLK1XBoNO4yaX', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ downloadLink }),
+    });
+
+    // Check if response is OK
+    if (!response.ok) {
+      throw new Error(`HTTP Error: ${response.status}`);
+    }
+  } catch (error) {
+    console.error('Error sending webhook notification:', error); // More detailed logging for debugging
+  }
+}
+
+// Function to show error message
+function showError(message) {
+  errorMessage.textContent = message;
+  errorMessage.style.display = 'block';
+}
+
+// Add event listeners
+uploadButton.addEventListener('click', handleMultipleFileUpload);
 fileInput.addEventListener('change', handleMultipleFileUpload);
+
+// Display all files on page load
+displayAllFiles();
