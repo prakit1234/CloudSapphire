@@ -9,7 +9,7 @@ body, html {
     align-items: center;
     flex-direction: column;
     font-family: 'Montserrat', sans-serif;
-    background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+    background: #0d0d0d; /* Changed to solid black */
     color: #e0e0e0;
 }
 
@@ -26,7 +26,6 @@ header {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
     position: relative;
     z-index: 1;
-    margin: auto; /* Ensure it stays centered */
 }
 
 /* Logo styling */
@@ -79,4 +78,3 @@ h1 {
     background-color: #008fb3;
     box-shadow: 0 6px 12px rgba(0, 217, 255, 0.7);
 }
-
