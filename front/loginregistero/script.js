@@ -1,21 +1,6 @@
-// JavaScript functionality to switch forms and handle login/register
-const switchToRegister = document.getElementById('switchToRegister');
-const formTitle = document.getElementById('formTitle');
-const submitBtn = document.getElementById('submitBtn');
-
-switchToRegister.addEventListener('click', (e) => {
-    e.preventDefault();
-    formTitle.textContent = "Register";
-    submitBtn.textContent = "Register";
-    switchToRegister.parentElement.innerHTML = "Already have an account? <a href='#' id='switchToLogin'>Login</a>";
-    
-    document.getElementById('switchToLogin').addEventListener('click', (e) => {
-        e.preventDefault();
-        formTitle.textContent = "Login";
-        submitBtn.textContent = "Login";
-        switchToRegister.parentElement.innerHTML = "Don't have an account? <a href='#' id='switchToRegister'>Register</a>";
-    });
-});
+// Import Firebase functions
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -28,9 +13,9 @@ const firebaseConfig = {
     measurementId: "G-C3PYVE5GQ2"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
 // Switch between Login and Register forms
 const switchToRegister = document.getElementById('switchToRegister');
@@ -42,7 +27,8 @@ switchToRegister.addEventListener('click', (e) => {
     formTitle.textContent = "Register";
     submitBtn.textContent = "Register";
     switchToRegister.parentElement.innerHTML = "Already have an account? <a href='#' id='switchToLogin'>Login</a>";
-    
+
+    // Event listener for switching back to login
     document.getElementById('switchToLogin').addEventListener('click', (e) => {
         e.preventDefault();
         formTitle.textContent = "Login";
@@ -51,7 +37,7 @@ switchToRegister.addEventListener('click', (e) => {
     });
 });
 
-// Register function
+// Handle Form Submission
 document.getElementById('authForm').addEventListener('submit', (e) => {
     e.preventDefault();
     const email = document.getElementById('email').value;
@@ -61,6 +47,8 @@ document.getElementById('authForm').addEventListener('submit', (e) => {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 console.log("User registered:", userCredential.user);
+                // Redirect after registration
+                window.location.href = 'dashboard.html'; // Change to your desired page
             })
             .catch((error) => {
                 console.error("Error registering:", error);
@@ -69,6 +57,8 @@ document.getElementById('authForm').addEventListener('submit', (e) => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 console.log("User logged in:", userCredential.user);
+                // Redirect after login
+                window.location.href = 'dashboard.html'; // Change to your desired page
             })
             .catch((error) => {
                 console.error("Error logging in:", error);
@@ -78,16 +68,18 @@ document.getElementById('authForm').addEventListener('submit', (e) => {
 
 // Google Sign-In functionality
 const googleLoginBtn = document.getElementById('googleLoginBtn');
-const provider = new GoogleAuthProvider();
 
 googleLoginBtn.addEventListener('click', () => {
     signInWithPopup(auth, provider)
         .then((result) => {
             console.log("User logged in with Google:", result.user);
+            // Redirect after Google login
+            window.location.href = 'dashboard.html'; // Change to your desired page
         })
         .catch((error) => {
             console.error("Error with Google login:", error);
         });
 });
+
 
 
