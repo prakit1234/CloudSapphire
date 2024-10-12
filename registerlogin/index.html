@@ -1,1 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Register</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container login-container">
+            <form id="loginForm">
+                <h1>Login</h1>
+                <input type="email" placeholder="Email" required />
+                <input type="password" placeholder="Password" required />
+                <button type="submit">Login</button>
+                <button type="button" class="google-button" id="googleLoginBtn">Login with Google</button>
+                <span>Don't have an account? <a href="#" id="switchToRegister">Register</a></span>
+            </form>
+        </div>
+        <div class="form-container register-container">
+            <form id="registerForm">
+                <h1>Register</h1>
+                <input type="email" placeholder="Email" required />
+                <input type="password" placeholder="Password" required />
+                <button type="submit">Register</button>
+                <span>Already have an account? <a href="#" id="switchToLogin">Login</a></span>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
 
