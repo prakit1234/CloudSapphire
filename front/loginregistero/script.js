@@ -21,19 +21,28 @@ const provider = new GoogleAuthProvider();
 const switchToRegister = document.getElementById('switchToRegister');
 const formTitle = document.getElementById('formTitle');
 const submitBtn = document.getElementById('submitBtn');
+const usernameField = document.getElementById('username');
+const confirmPasswordField = document.getElementById('confirmPassword');
+const errorMessage = document.createElement('p'); // Create an error message element
+errorMessage.style.color = 'red'; // Style for error message
+document.querySelector('.form-container').appendChild(errorMessage); // Append to the form
 
 switchToRegister.addEventListener('click', (e) => {
     e.preventDefault();
     formTitle.textContent = "Register";
     submitBtn.textContent = "Register";
+    usernameField.style.display = 'block'; // Show username field
+    confirmPasswordField.style.display = 'block'; // Show confirm password field
     switchToRegister.parentElement.innerHTML = "Already have an account? <a href='#' id='switchToLogin'>Login</a>";
 
-    // Event listener for switching back to login
     document.getElementById('switchToLogin').addEventListener('click', (e) => {
         e.preventDefault();
         formTitle.textContent = "Login";
         submitBtn.textContent = "Login";
+        usernameField.style.display = 'none'; // Hide username field
+        confirmPasswordField.style.display = 'none'; // Hide confirm password field
         switchToRegister.parentElement.innerHTML = "Don't have an account? <a href='#' id='switchToRegister'>Register</a>";
+        errorMessage.textContent = ""; // Clear error message when switching
     });
 });
 
@@ -44,24 +53,30 @@ document.getElementById('authForm').addEventListener('submit', (e) => {
     const password = document.getElementById('password').value;
 
     if (submitBtn.textContent === "Register") {
+        const username = document.getElementById('username').value; // Get username
+
+        // Check if passwords match
+        if (password !== confirmPasswordField.value) {
+            errorMessage.textContent = "Passwords do not match!";
+            return;
+        }
+
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 console.log("User registered:", userCredential.user);
-                // Redirect after registration
                 window.location.href = 'dashboard.html'; // Change to your desired page
             })
             .catch((error) => {
-                console.error("Error registering:", error);
+                errorMessage.textContent = "Error registering: " + error.message; // Show error message
             });
     } else {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 console.log("User logged in:", userCredential.user);
-                // Redirect after login
                 window.location.href = 'dashboard.html'; // Change to your desired page
             })
             .catch((error) => {
-                console.error("Error logging in:", error);
+                errorMessage.textContent = "Error logging in: " + error.message; // Show error message
             });
     }
 });
@@ -73,13 +88,11 @@ googleLoginBtn.addEventListener('click', () => {
     signInWithPopup(auth, provider)
         .then((result) => {
             console.log("User logged in with Google:", result.user);
-            // Redirect after Google login
             window.location.href = 'dashboard.html'; // Change to your desired page
         })
         .catch((error) => {
-            console.error("Error with Google login:", error);
+            errorMessage.textContent = "Error with Google login: " + error.message; // Show error message
         });
 });
-
 
 
