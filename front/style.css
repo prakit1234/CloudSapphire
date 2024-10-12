@@ -74,7 +74,7 @@ h1 {
     font-size: 48px;
     margin: 10px 0;
     font-weight: 800;
-    color: #00d9ff;
+    color: #00d9ff; /* Neon blue for the title */
     text-shadow: 0 3px 5px rgba(0, 0, 0, 0.7);
 }
 
@@ -82,7 +82,7 @@ h1 {
     font-size: 18px;
     margin: 8px 0;
     font-weight: 300;
-    color: #cccccc;
+    color: #cccccc; /* Lighter gray for description */
 }
 
 /* Button styles */
@@ -107,3 +107,4 @@ h1 {
     transform: translateY(-3px);
     background-color: #008fb3; /* Darker hover effect */
 }
+
