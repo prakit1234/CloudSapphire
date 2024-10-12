@@ -15,7 +15,10 @@ body, html {
 
 /* Header styling */
 header {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding: 40px;
     max-width: 800px;
     background-color: rgba(34, 34, 34, 0.95); /* Slightly darker shade for better contrast */
