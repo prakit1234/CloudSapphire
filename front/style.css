@@ -9,10 +9,12 @@ body, html {
     align-items: center;
     flex-direction: column;
     font-family: 'Montserrat', sans-serif;
-    color: #0000;
+    color: #e0e0e0; /* Text color */
+    background-color: black; /* Set background to black */
     overflow: hidden; /* Prevent scrolling */
     position: relative;
 }
+
 
 /* Particle background */
 .particle-background {
