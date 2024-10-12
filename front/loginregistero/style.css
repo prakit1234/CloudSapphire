@@ -11,17 +11,12 @@ body {
 }
 
 .container {
-    display: flex;
     width: 100%;
     max-width: 400px;
     background: rgba(34, 34, 34, 0.95);
     border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-}
-
-.form-container {
-    flex: 1;
     padding: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
 h1 {
