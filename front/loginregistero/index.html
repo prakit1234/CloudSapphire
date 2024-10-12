@@ -16,12 +16,40 @@
                 <h1 id="formTitle">Login</h1>
                 <input type="email" id="email" placeholder="Email" required />
                 <input type="password" id="password" placeholder="Password" required />
+                <input type="text" id="username" placeholder="Username" required style="display: none;" /> <!-- Hidden by default -->
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" required style="display: none;" /> <!-- Hidden by default -->
                 <button type="submit" id="submitBtn">Login</button>
                 <button type="button" class="google-button" id="googleLoginBtn">Login with Google</button>
                 <span id="switchText">Don't have an account? <a href="#" id="switchToRegister">Register</a></span>
             </form>
         </div>
     </div>
+    <script>
+        // JavaScript functionality to switch forms and handle login/register
+        const switchToRegister = document.getElementById('switchToRegister');
+        const formTitle = document.getElementById('formTitle');
+        const submitBtn = document.getElementById('submitBtn');
+        const usernameField = document.getElementById('username');
+        const confirmPasswordField = document.getElementById('confirmPassword');
+
+        switchToRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            formTitle.textContent = "Register";
+            submitBtn.textContent = "Register";
+            usernameField.style.display = 'block'; // Show username field
+            confirmPasswordField.style.display = 'block'; // Show confirm password field
+            switchToRegister.parentElement.innerHTML = "Already have an account? <a href='#' id='switchToLogin'>Login</a>";
+
+            document.getElementById('switchToLogin').addEventListener('click', (e) => {
+                e.preventDefault();
+                formTitle.textContent = "Login";
+                submitBtn.textContent = "Login";
+                usernameField.style.display = 'none'; // Hide username field
+                confirmPasswordField.style.display = 'none'; // Hide confirm password field
+                switchToRegister.parentElement.innerHTML = "Don't have an account? <a href='#' id='switchToRegister'>Register</a>";
+            });
+        });
+    </script>
 </body>
 </html>
 
