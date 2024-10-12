@@ -7,8 +7,9 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     font-family: 'Montserrat', sans-serif;
-    background: linear-gradient(135deg, #0d0d0d, #1a1a1a); /* Subtle gradient background */
+    background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
     color: #e0e0e0;
 }
 
@@ -20,12 +21,12 @@ header {
     justify-content: center;
     padding: 40px;
     max-width: 800px;
-    background-color: rgba(34, 34, 34, 0.95); /* Slightly darker shade for better contrast */
+    background-color: rgba(34, 34, 34, 0.95);
     border-radius: 15px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
     position: relative;
     z-index: 1;
-    margin: auto; /* Center the header box within the viewport */
+    margin: auto; /* Ensure it stays centered */
 }
 
 /* Logo styling */
@@ -43,7 +44,7 @@ h1 {
     font-size: 48px;
     margin: 10px 0;
     font-weight: 800;
-    color: #00d9ff; /* Neon blue for the title */
+    color: #00d9ff;
     text-shadow: 0 3px 5px rgba(0, 0, 0, 0.7);
 }
 
@@ -51,7 +52,7 @@ h1 {
     font-size: 18px;
     margin: 8px 0;
     font-weight: 300;
-    color: #cccccc; /* Lighter gray for description */
+    color: #cccccc;
 }
 
 /* Button styles */
@@ -75,7 +76,7 @@ h1 {
 
 .cta-button:hover {
     transform: translateY(-3px);
-    background-color: #008fb3; /* Darker hover effect */
+    background-color: #008fb3;
     box-shadow: 0 6px 12px rgba(0, 217, 255, 0.7);
 }
 
