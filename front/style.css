@@ -6,10 +6,10 @@ body, html {
     height: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; /* Centers content vertically */
     flex-direction: column;
     font-family: 'Montserrat', sans-serif;
-    background: #0d0d0d; /* Changed to solid black */
+    background: #0d0d0d; /* Solid black background */
     color: #e0e0e0;
 }
 
@@ -26,6 +26,7 @@ header {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
     position: relative;
     z-index: 1;
+    height: auto; /* Allow header to expand as needed */
 }
 
 /* Logo styling */
