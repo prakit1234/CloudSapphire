@@ -1,110 +1,112 @@
-/* Body and HTML styles */
-body, html {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    font-family: 'Montserrat', sans-serif;
-    color: #e0e0e0;
-    overflow: hidden; /* Prevent scrolling */
-    position: relative;
+/* Body and HTML styles */  
+body, html {  
+   margin: 0;  
+   padding: 0;  
+   width: 100%;  
+   height: 100%;  
+   display: flex;  
+   justify-content: center;  
+   align-items: center;  
+   flex-direction: column;  
+   font-family: 'Montserrat', sans-serif;  
+   color: #e0e0e0;  
+   overflow: hidden; /* Prevent scrolling */  
+   position: relative;  
+   background-color: #000; /* Black background */  
+}  
+  
+/* Particle background */  
+.particle-background {  
+   position: absolute;  
+   top: 0;  
+   left: 0;  
+   width: 100%;  
+   height: 100%;  
+   background-color: #000; /* Black background */  
+   overflow: hidden; /* Hide overflow */  
+}  
+  
+.particle {  
+   position: absolute;  
+   background-color: rgba(0, 217, 255, 0.7);  
+   border-radius: 50%;  
+   animation: particle-animation 15s infinite;  
+}  
+  
+/* Particle animation */  
+@keyframes particle-animation {  
+   0% {  
+      transform: translateY(0) scale(0.1);  
+      opacity: 1;  
+   }  
+   50% {  
+      transform: translateY(-100vh) scale(1);  
+      opacity: 0.7;  
+   }  
+   100% {  
+      transform: translateY(0) scale(0.1);  
+      opacity: 0;  
+   }  
+}  
+  
+/* Header styling */  
+header {  
+   display: flex;  
+   flex-direction: column;  
+   align-items: center;  
+   justify-content: center;  
+   padding: 40px;  
+   max-width: 800px;  
+   background-color: rgba(34, 34, 34, 0.95);  
+   border-radius: 15px;  
+   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);  
+   position: relative;  
+   z-index: 1;  
+}  
+  
+/* Logo styling */  
+.logo {  
+   width: 50px;  
+   height: 50px;  
+}  
+  
+/* Title and description styling */  
+h1 {  
+   font-size: 48px;  
+   margin: 10px 0;  
+   font-weight: 800;  
+   color: #00d9ff; /* Neon blue for the title */  
+   text-shadow: 0 3px 5px rgba(0, 0, 0, 0.7);  
+}  
+  
+.description {  
+   font-size: 18px;  
+   margin: 8px 0;  
+   font-weight: 300;  
+   color: #cccccc; /* Lighter gray for description */  
+}  
+  
+/* Button styles */  
+.cta-button {  
+   padding: 12px 30px;  
+   margin: 12px;  
+   border: 2px solid #00d9ff;  
+   border-radius: 30px;  
+   font-size: 16px;  
+   color: #0d0d0d;  
+   background-color: #00d9ff;  
+   cursor: pointer;  
+   transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;  
+}  
+  
+.cta-button.secondary {  
+   background-color: transparent;  
+   color: #00d9ff;  
+}  
+  
+.cta-button:hover {  
+   transform: translateY(-3px);  
+   background-color: #008fb3; /* Darker hover effect */  
 }
 
-/* Particle background */
-.particle-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: black; /* Black background */
-    overflow: hidden; /* Hide overflow */
-}
-
-.particle {
-    position: absolute;
-    background-color: rgba(0, 217, 255, 0.7);
-    border-radius: 50%;
-    animation: particle-animation 15s infinite;
-}
-
-/* Particle animation */
-@keyframes particle-animation {
-    0% {
-        transform: translateY(0) scale(0.1);
-        opacity: 1;
-    }
-    50% {
-        transform: translateY(-100vh) scale(1);
-        opacity: 0.7;
-    }
-    100% {
-        transform: translateY(0) scale(0.1);
-        opacity: 0;
-    }
-}
-
-/* Header styling */
-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px;
-    max-width: 800px;
-    background-color: rgba(34, 34, 34, 0.95);
-    border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-    position: relative;
-    z-index: 1;
-}
-
-/* Logo styling */
-.logo {
-    width: 50px;
-    height: 50px;
-}
-
-/* Title and description styling */
-h1 {
-    font-size: 48px;
-    margin: 10px 0;
-    font-weight: 800;
-    color: #00d9ff; /* Neon blue for the title */
-    text-shadow: 0 3px 5px rgba(0, 0, 0, 0.7);
-}
-
-.description {
-    font-size: 18px;
-    margin: 8px 0;
-    font-weight: 300;
-    color: #cccccc; /* Lighter gray for description */
-}
-
-/* Button styles */
-.cta-button {
-    padding: 12px 30px;
-    margin: 12px;
-    border: 2px solid #00d9ff;
-    border-radius: 30px;
-    font-size: 16px;
-    color: #0d0d0d;
-    background-color: #00d9ff;
-    cursor: pointer;
-    transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
-}
-
-.cta-button.secondary {
-    background-color: transparent;
-    color: #00d9ff;
-}
-
-.cta-button:hover {
-    transform: translateY(-3px);
-    background-color: #008fb3; /* Darker hover effect */
-}
 
