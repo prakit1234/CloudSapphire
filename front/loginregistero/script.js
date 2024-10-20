@@ -1,21 +1,7 @@
-// Import Firebase functions
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-
-// Initialize Firebase
-const firebaseConfig = {
-    apiKey: "AIzaSyCUjd9L2B5GKXYSugaGzS2u84CiKQDArpo",
-    authDomain: "cloudsapphire-9321f.firebaseapp.com",
-    projectId: "cloudsapphire-9321f",
-    storageBucket: "cloudsapphire-9321f.appspot.com",
-    messagingSenderId: "912305546515",
-    appId: "1:912305546515:web:b373b5c8b7d601e1e5e6e6",
-    measurementId: "G-C3PYVE5GQ2"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
+// Initialize Supabase
+const SUPABASE_URL = 'https://tdijndlgrelaackyrnal.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRkaWpuZGxncmVsYWFja3lybmFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjk0MDczMzIsImV4cCI6MjA0NDk4MzMzMn0.CfoZgLRx0kC8H85MYflzowNFGuwigyxYficMNlJfM9g';
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Switch between Login and Register forms
 const switchToRegister = document.getElementById('switchToRegister');
@@ -23,76 +9,89 @@ const formTitle = document.getElementById('formTitle');
 const submitBtn = document.getElementById('submitBtn');
 const usernameField = document.getElementById('username');
 const confirmPasswordField = document.getElementById('confirmPassword');
-const errorMessage = document.createElement('p'); // Create an error message element
-errorMessage.style.color = 'red'; // Style for error message
-document.querySelector('.form-container').appendChild(errorMessage); // Append to the form
+const errorMessage = document.createElement('p');
+errorMessage.style.color = 'red';
+document.querySelector('.form-container').appendChild(errorMessage);
 
 switchToRegister.addEventListener('click', (e) => {
     e.preventDefault();
     formTitle.textContent = "Register";
     submitBtn.textContent = "Register";
-    usernameField.style.display = 'block'; // Show username field
-    confirmPasswordField.style.display = 'block'; // Show confirm password field
+    usernameField.style.display = 'block';
+    confirmPasswordField.style.display = 'block';
     switchToRegister.parentElement.innerHTML = "Already have an account? <a href='#' id='switchToLogin'>Login</a>";
 
     document.getElementById('switchToLogin').addEventListener('click', (e) => {
         e.preventDefault();
         formTitle.textContent = "Login";
         submitBtn.textContent = "Login";
-        usernameField.style.display = 'none'; // Hide username field
-        confirmPasswordField.style.display = 'none'; // Hide confirm password field
+        usernameField.style.display = 'none';
+        confirmPasswordField.style.display = 'none';
         switchToRegister.parentElement.innerHTML = "Don't have an account? <a href='#' id='switchToRegister'>Register</a>";
-        errorMessage.textContent = ""; // Clear error message when switching
+        errorMessage.textContent = "";
     });
 });
 
-// Handle Form Submission
-document.getElementById('authForm').addEventListener('submit', (e) => {
+// Handle Form Submission for Registration and Login
+document.getElementById('authForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
     if (submitBtn.textContent === "Register") {
-        const username = document.getElementById('username').value; // Get username
+        const username = document.getElementById('username').value;
 
-        // Check if passwords match
         if (password !== confirmPasswordField.value) {
             errorMessage.textContent = "Passwords do not match!";
             return;
         }
 
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                console.log("User registered:", userCredential.user);
-                window.location.href = 'dashboard.html'; // Change to your desired page
-            })
-            .catch((error) => {
-                errorMessage.textContent = "Error registering: " + error.message; // Show error message
-            });
+        // Register user with Supabase
+        const { data, error } = await supabase.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+                data: { username: username }
+            }
+        });
+
+        if (error) {
+            errorMessage.textContent = "Error registering: " + error.message;
+        } else {
+            console.log("User registered:", data.user);
+            window.location.href = 'dashboard.html';
+        }
     } else {
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                console.log("User logged in:", userCredential.user);
-                window.location.href = 'dashboard.html'; // Change to your desired page
-            })
-            .catch((error) => {
-                errorMessage.textContent = "Error logging in: " + error.message; // Show error message
-            });
+        // Login user with Supabase
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+
+        if (error) {
+            errorMessage.textContent = "Error logging in: " + error.message;
+        } else {
+            console.log("User logged in:", data.user);
+            window.location.href = 'dashboard.html';
+        }
     }
 });
 
-// Google Sign-In functionality
+// Google Sign-In functionality with Supabase
 const googleLoginBtn = document.getElementById('googleLoginBtn');
 
-googleLoginBtn.addEventListener('click', () => {
-    signInWithPopup(auth, provider)
-        .then((result) => {
-            console.log("User logged in with Google:", result.user);
-            window.location.href = 'dashboard.html'; // Change to your desired page
-        })
-        .catch((error) => {
-            errorMessage.textContent = "Error with Google login: " + error.message; // Show error message
-        });
+googleLoginBtn.addEventListener('click', async () => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google'
+    });
+
+    if (error) {
+        errorMessage.textContent = "Error with Google login: " + error.message;
+    } else {
+        console.log("User logged in with Google:", data);
+        window.location.href = 'dashboard.html';
+    }
 });
+
 
 
