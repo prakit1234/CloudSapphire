@@ -2,95 +2,109 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 body {
-    background-color: #f0f0f0;
-    color: #333;
+    background-color: #f5f5f5; /* Light background for the body */
+    color: #333; /* Default text color */
     transition: background-color 0.3s, color 0.3s;
 }
 
 .dashboard-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff; /* White background for the container */
 }
 
 header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px;
+    margin-bottom: 30px;
 }
 
 .logo {
-    width: 100px; /* Adjust logo size */
+    width: 80px; /* Adjust logo size */
 }
 
 .dashboard-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #ff0000; /* Initial color */
-    background: linear-gradient(90deg, #ff0000, #ff7300, #ffe300, #00ff00, #00ffff, #0000ff, #8a00ff, #ff00ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: rainbow 5s infinite linear;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #6a0dad; /* A rich violet color */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    font-family: 'Pacifico', cursive; /* Aesthetic font for the title */
 }
 
-@keyframes rainbow {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 100% 50%; }
+.dark-mode-toggle {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #6a0dad; /* Violet background */
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.dark-mode {
-    background-color: #121212;
-    color: #ffffff;
+.dark-mode-toggle:hover {
+    background-color: #5b0c8d; /* Darker shade on hover */
 }
 
 .options-container {
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
+    gap: 20px; /* Space between boxes */
 }
 
 .option-box {
     flex: 1;
-    margin: 0 10px;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s, box-shadow 0.3s;
-}
-
-.option-box h2 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: center;
-    color: #ff0000;
-}
-
-.option-box input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    border: 2px solid #ff0000;
-    border-radius: 4px;
-    font-size: 1rem;
+    padding: 40px; /* Increased padding for larger boxes */
+    border-radius: 15px;
+    background: linear-gradient(135deg, #ff6f91, #ffcccb); /* Pink to light pink gradient */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    cursor: pointer; /* Change cursor to pointer */
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth animations */
 }
 
 .option-box:hover {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-8px); /* Lift effect on hover */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
-/* Dark Mode Button Style */
-.dark-mode-toggle {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #ff0000;
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
+.option-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #6a0dad; /* Violet for titles */
+    margin-bottom: 10px; /* Spacing below title */
+}
+
+.option-description {
+    font-size: 1.2rem;
+    color: #555; /* Darker gray for descriptions */
+    margin-top: 10px;
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+    background-color: #121212; /* Dark mode background */
+    color: #ffffff; /* White text in dark mode */
+}
+
+.dark-mode .option-box {
+    background: linear-gradient(135deg, #3e1f78, #5e5d63); /* Darker gradient for dark mode */
+}
+
+.dark-mode .option-description {
+    color: #b0b0b0; /* Lighter gray for descriptions in dark mode */
+}
+.dashboard-description {
+    font-size: 1.4rem; /* Size for the description */
+    color: #555; /* Gray color for description */
+    margin-bottom: 30px; /* Space below the description */
+    line-height: 1.6; /* Better line spacing for readability */
+    text-align: center; /* Center-align the text */
 }
