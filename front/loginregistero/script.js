@@ -1,6 +1,6 @@
 // Initialize Supabase
 const SUPABASE_URL = 'https://tdijndlgrelaackyrnal.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRkaWpuZGxncmVsYWFja3lybmFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjk0MDczMzIsImV4cCI6MjA0NDk4MzMzMn0.CfoZgLRx0kC8H85MYflzowNFGuwigyxYficMNlJfM9g';
+const SUPABASE_KEY = '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'; 
 const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Switch between Login and Register forms
@@ -21,6 +21,7 @@ switchToRegister.addEventListener('click', (e) => {
     confirmPasswordField.style.display = 'block';
     switchToRegister.parentElement.innerHTML = "Already have an account? <a href='#' id='switchToLogin'>Login</a>";
 
+    // Add listener for Login switch
     document.getElementById('switchToLogin').addEventListener('click', (e) => {
         e.preventDefault();
         formTitle.textContent = "Login";
@@ -28,7 +29,7 @@ switchToRegister.addEventListener('click', (e) => {
         usernameField.style.display = 'none';
         confirmPasswordField.style.display = 'none';
         switchToRegister.parentElement.innerHTML = "Don't have an account? <a href='#' id='switchToRegister'>Register</a>";
-        errorMessage.textContent = "";
+        errorMessage.textContent = ""; // Clear error message
     });
 });
 
@@ -39,8 +40,9 @@ document.getElementById('authForm').addEventListener('submit', async (e) => {
     const password = document.getElementById('password').value;
 
     if (submitBtn.textContent === "Register") {
-        const username = document.getElementById('username').value;
+        const username = usernameField.value;
 
+        // Check if passwords match
         if (password !== confirmPasswordField.value) {
             errorMessage.textContent = "Passwords do not match!";
             return;
@@ -59,7 +61,7 @@ document.getElementById('authForm').addEventListener('submit', async (e) => {
             errorMessage.textContent = "Error registering: " + error.message;
         } else {
             console.log("User registered:", data.user);
-            window.location.href = 'dashboard.html';
+            window.location.href = 'dashboard.html'; // Redirect to dashboard
         }
     } else {
         // Login user with Supabase
@@ -72,7 +74,7 @@ document.getElementById('authForm').addEventListener('submit', async (e) => {
             errorMessage.textContent = "Error logging in: " + error.message;
         } else {
             console.log("User logged in:", data.user);
-            window.location.href = 'dashboard.html';
+            window.location.href = 'dashboard.html'; // Redirect to dashboard
         }
     }
 });
@@ -89,9 +91,6 @@ googleLoginBtn.addEventListener('click', async () => {
         errorMessage.textContent = "Error with Google login: " + error.message;
     } else {
         console.log("User logged in with Google:", data);
-        window.location.href = 'dashboard.html';
+        window.location.href = 'dashboard.html'; // Redirect to dashboard
     }
 });
-
-
-
