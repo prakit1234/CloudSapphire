@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header>
+            <img src="logo.png" alt="Logo" class="logo" /> <!-- Replace with your logo -->
+            <h1 class="dashboard-title">User Dashboard</h1>
+            <button id="toggleDarkMode" class="dark-mode-toggle">Toggle Dark Mode</button>
+        </header>
+        <div class="options-container">
+            <div class="option-box" onclick="location.href='option1.html';"> <!-- Redirect to Option 1 -->
+                <h2 class="option-title">Option 1</h2>
+                <p class="option-description">Go to Option 1 details and actions.</p>
+            </div>
+            <div class="option-box" onclick="location.href='option2.html';"> <!-- Redirect to Option 2 -->
+                <h2 class="option-title">Option 2</h2>
+                <p class="option-description">Explore the features of Option 2.</p>
+            </div>
+            <div class="option-box" onclick="location.href='option3.html';"> <!-- Redirect to Option 3 -->
+                <h2 class="option-title">Option 3</h2>
+                <p class="option-description">Learn more about Option 3.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
