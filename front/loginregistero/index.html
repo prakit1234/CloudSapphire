@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login/Register</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js"></script>
-    <script src="script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0/dist/umd/supabase.js"></script>
+    <script type="module" src="script.js"></script>
 </head>
 <body>
     <div class="container">
@@ -16,40 +15,15 @@
                 <h1 id="formTitle">Login</h1>
                 <input type="email" id="email" placeholder="Email" required />
                 <input type="password" id="password" placeholder="Password" required />
-                <input type="text" id="username" placeholder="Username" required style="display: none;" /> <!-- Hidden by default -->
-                <input type="password" id="confirmPassword" placeholder="Confirm Password" required style="display: none;" /> <!-- Hidden by default -->
+                <input type="text" id="username" placeholder="Username" required style="display: none;" />
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" required style="display: none;" />
                 <button type="submit" id="submitBtn">Login</button>
                 <button type="button" class="google-button" id="googleLoginBtn">Login with Google</button>
                 <span id="switchText">Don't have an account? <a href="#" id="switchToRegister">Register</a></span>
             </form>
         </div>
     </div>
-    <script>
-        // JavaScript functionality to switch forms and handle login/register
-        const switchToRegister = document.getElementById('switchToRegister');
-        const formTitle = document.getElementById('formTitle');
-        const submitBtn = document.getElementById('submitBtn');
-        const usernameField = document.getElementById('username');
-        const confirmPasswordField = document.getElementById('confirmPassword');
-
-        switchToRegister.addEventListener('click', (e) => {
-            e.preventDefault();
-            formTitle.textContent = "Register";
-            submitBtn.textContent = "Register";
-            usernameField.style.display = 'block'; // Show username field
-            confirmPasswordField.style.display = 'block'; // Show confirm password field
-            switchToRegister.parentElement.innerHTML = "Already have an account? <a href='#' id='switchToLogin'>Login</a>";
-
-            document.getElementById('switchToLogin').addEventListener('click', (e) => {
-                e.preventDefault();
-                formTitle.textContent = "Login";
-                submitBtn.textContent = "Login";
-                usernameField.style.display = 'none'; // Hide username field
-                confirmPasswordField.style.display = 'none'; // Hide confirm password field
-                switchToRegister.parentElement.innerHTML = "Don't have an account? <a href='#' id='switchToRegister'>Register</a>";
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
 

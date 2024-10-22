@@ -1,0 +1,122 @@
+/* General Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Body Style */
+body {
+    background-color: #f2f0f1; /* Light, soft background */
+    color: #333; /* Default text color */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    background-color: #ffffff; /* White background for the container */
+}
+
+/* Header Styles */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+/* Logo Styles */
+.logo {
+    width: 60px; /* Smaller logo size to avoid displacement */
+}
+
+/* Title Style */
+.dashboard-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #8a2be2; /* A rich violet aesthetic color */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Mode Toggle Button */
+.dark-mode-toggle {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #8a2be2; /* Violet aesthetic background */
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.dark-mode-toggle:hover {
+    background-color: #6c1bb5; /* Slightly darker violet on hover */
+}
+
+/* Options Container */
+.options-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Space between boxes */
+}
+
+/* Option Box Style */
+.option-box {
+    flex: 1;
+    padding: 30px;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #f783ac, #ff9aa2); /* Aesthetic pink gradient */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.option-box:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Option Title */
+.option-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #8a2be2; /* Violet color */
+    margin-bottom: 10px;
+}
+
+/* Option Description */
+.option-description {
+    font-size: 1rem;
+    color: #555;
+    margin-top: 10px;
+}
+
+/* Dashboard Description */
+.dashboard-description {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+.dark-mode .option-box {
+    background: linear-gradient(135deg, #4b0082, #6b7280); /* Darker gradient for dark mode */
+}
+
+.dark-mode .option-description {
+    color: #bbbbbb; /* Lighter gray in dark mode */
+}
