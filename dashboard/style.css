@@ -6,20 +6,22 @@
 }
 
 body {
-    background-color: #f5f5f5; /* Light background for the body */
-    color: #333; /* Default text color */
+    background-color: #f0f0f5; /* Slightly off-white for less strain on eyes */
+    color: #2c2c2c; /* Softer dark text color */
     transition: background-color 0.3s, color 0.3s;
 }
 
+/* Dashboard Container */
 .dashboard-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
-    background-color: #ffffff; /* White background for the container */
+    background-color: #ffffff; /* Light mode background */
 }
 
+/* Header */
 header {
     display: flex;
     align-items: center;
@@ -27,23 +29,21 @@ header {
     margin-bottom: 30px;
 }
 
-.logo {
-    width: 80px; /* Adjust logo size */
-}
-
+/* Dashboard Title */
 .dashboard-title {
     font-size: 2.8rem;
     font-weight: 700;
-    color: #6a0dad; /* A rich violet color */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-    font-family: 'Pacifico', cursive; /* Aesthetic font for the title */
+    color: #d63384; /* A brighter pink for more pop */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    font-family: 'Pacifico', cursive;
 }
 
+/* Dark Mode Toggle Button */
 .dark-mode-toggle {
-    padding: 10px;
+    padding: 10px 15px;
     border: none;
-    border-radius: 5px;
-    background-color: #6a0dad; /* Violet background */
+    border-radius: 8px;
+    background-color: #d63384; /* Pink */
     color: white;
     font-size: 1.5rem;
     cursor: pointer;
@@ -51,27 +51,28 @@ header {
 }
 
 .dark-mode-toggle:hover {
-    background-color: #5b0c8d; /* Darker shade on hover */
+    background-color: #b12c6c; /* Slightly darker pink */
 }
 
+/* Option Boxes */
 .options-container {
     display: flex;
     justify-content: space-between;
-    gap: 20px; /* Space between boxes */
+    gap: 20px;
 }
 
 .option-box {
     flex: 1;
-    padding: 40px; /* Increased padding for larger boxes */
+    padding: 40px;
     border-radius: 15px;
-    background: linear-gradient(135deg, #ff6f91, #ffcccb); /* Pink to light pink gradient */
+    background: linear-gradient(135deg, #ff6f91, #ffcccb); /* Pink gradient */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    cursor: pointer; /* Change cursor to pointer */
-    transition: transform 0.3s, box-shadow 0.3s; /* Smooth animations */
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .option-box:hover {
-    transform: translateY(-8px); /* Lift effect on hover */
+    transform: translateY(-8px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
@@ -79,32 +80,35 @@ header {
     font-size: 2rem;
     font-weight: 700;
     color: #6a0dad; /* Violet for titles */
-    margin-bottom: 10px; /* Spacing below title */
 }
 
 .option-description {
     font-size: 1.2rem;
-    color: #555; /* Darker gray for descriptions */
-    margin-top: 10px;
+    color: #555; /* Dark gray */
 }
 
-/* Dark Mode Styles */
+/* Dark Mode */
 .dark-mode {
-    background-color: #121212; /* Dark mode background */
-    color: #ffffff; /* White text in dark mode */
+    background-color: #121212; /* Dark background */
+    color: #e0e0e0; /* Light text */
+}
+
+.dark-mode .dashboard-container {
+    background-color: #1e1e1e; /* Dark container */
 }
 
 .dark-mode .option-box {
-    background: linear-gradient(135deg, #3e1f78, #5e5d63); /* Darker gradient for dark mode */
+    background: linear-gradient(135deg, #3e1f78, #5e5d63); /* Dark gradient */
+}
+
+.dark-mode .dashboard-title {
+    color: #ff6f91; /* Brighter text */
+}
+
+.dark-mode .option-title {
+    color: #ff6f91; /* Brighter violet */
 }
 
 .dark-mode .option-description {
-    color: #b0b0b0; /* Lighter gray for descriptions in dark mode */
-}
-.dashboard-description {
-    font-size: 1.4rem; /* Size for the description */
-    color: #555; /* Gray color for description */
-    margin-bottom: 30px; /* Space below the description */
-    line-height: 1.6; /* Better line spacing for readability */
-    text-align: center; /* Center-align the text */
+    color: #b0b0b0; /* Light gray */
 }
