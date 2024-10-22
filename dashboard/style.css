@@ -1,13 +1,15 @@
+/* General Reset */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
+/* Body Style */
 body {
-    background-color: #f0f0f5; /* Slightly off-white for less strain on eyes */
-    color: #2c2c2c; /* Softer dark text color */
+    background-color: #f2f0f1; /* Light, soft background */
+    color: #333; /* Default text color */
     transition: background-color 0.3s, color 0.3s;
 }
 
@@ -17,11 +19,11 @@ body {
     margin: 0 auto;
     padding: 30px;
     border-radius: 15px;
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
-    background-color: #ffffff; /* Light mode background */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    background-color: #ffffff; /* White background for the container */
 }
 
-/* Header */
+/* Header Styles */
 header {
     display: flex;
     align-items: center;
@@ -29,86 +31,92 @@ header {
     margin-bottom: 30px;
 }
 
-/* Dashboard Title */
+/* Logo Styles */
+.logo {
+    width: 60px; /* Smaller logo size to avoid displacement */
+}
+
+/* Title Style */
 .dashboard-title {
-    font-size: 2.8rem;
+    font-size: 2.5rem;
     font-weight: 700;
-    color: #d63384; /* A brighter pink for more pop */
+    color: #8a2be2; /* A rich violet aesthetic color */
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-    font-family: 'Pacifico', cursive;
 }
 
 /* Dark Mode Toggle Button */
 .dark-mode-toggle {
-    padding: 10px 15px;
+    padding: 10px;
     border: none;
-    border-radius: 8px;
-    background-color: #d63384; /* Pink */
+    border-radius: 5px;
+    background-color: #8a2be2; /* Violet aesthetic background */
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
 .dark-mode-toggle:hover {
-    background-color: #b12c6c; /* Slightly darker pink */
+    background-color: #6c1bb5; /* Slightly darker violet on hover */
 }
 
-/* Option Boxes */
+/* Options Container */
 .options-container {
     display: flex;
     justify-content: space-between;
-    gap: 20px;
+    gap: 20px; /* Space between boxes */
 }
 
+/* Option Box Style */
 .option-box {
     flex: 1;
-    padding: 40px;
+    padding: 30px;
     border-radius: 15px;
-    background: linear-gradient(135deg, #ff6f91, #ffcccb); /* Pink gradient */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #f783ac, #ff9aa2); /* Aesthetic pink gradient */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .option-box:hover {
     transform: translateY(-8px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
+/* Option Title */
 .option-title {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 700;
-    color: #6a0dad; /* Violet for titles */
+    color: #8a2be2; /* Violet color */
+    margin-bottom: 10px;
 }
 
+/* Option Description */
 .option-description {
+    font-size: 1rem;
+    color: #555;
+    margin-top: 10px;
+}
+
+/* Dashboard Description */
+.dashboard-description {
     font-size: 1.2rem;
-    color: #555; /* Dark gray */
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.6;
+    text-align: center;
 }
 
-/* Dark Mode */
+/* Dark Mode Styles */
 .dark-mode {
-    background-color: #121212; /* Dark background */
-    color: #e0e0e0; /* Light text */
-}
-
-.dark-mode .dashboard-container {
-    background-color: #1e1e1e; /* Dark container */
+    background-color: #1a1a1a;
+    color: #ffffff;
 }
 
 .dark-mode .option-box {
-    background: linear-gradient(135deg, #3e1f78, #5e5d63); /* Dark gradient */
-}
-
-.dark-mode .dashboard-title {
-    color: #ff6f91; /* Brighter text */
-}
-
-.dark-mode .option-title {
-    color: #ff6f91; /* Brighter violet */
+    background: linear-gradient(135deg, #4b0082, #6b7280); /* Darker gradient for dark mode */
 }
 
 .dark-mode .option-description {
-    color: #b0b0b0; /* Light gray */
+    color: #bbbbbb; /* Lighter gray in dark mode */
 }
