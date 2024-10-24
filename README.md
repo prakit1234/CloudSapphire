@@ -1,6 +1,7 @@
 🚀 Welcome to Svelte!
 Kickstart your journey with Svelte using the powerful create-svelte template! 🎨
- https://media.giphy.com/media/fxsqOYnIMEefC/giphy.gif
+![Project Status](https://img.shields.io/badge/Project-Active-brightgreen)
+
 
 Get ready to create something amazing!
 
@@ -16,7 +17,7 @@ npm create svelte@latest
 npm create svelte@latest my-app
 
 Setting up your project folder like a pro!
- https://media.giphy.com/media/VxbvpfaTTo3le/giphy.gif
+
 🛠️ Developing Your Project
 Now that your project is set up, install the dependencies with:
 
@@ -54,6 +55,6 @@ Time to shine!
 
 🏁 Happy Building!
 Feel free to reach out to the Svelte community if you need help. 😊
- https://media.giphy.com/media/26gJzRrXyKuTKg6Lu/giphy.gif
+
 
 You’ve got this!
