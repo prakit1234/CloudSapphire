@@ -1,0 +1,93 @@
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(45deg, #000000, #1a1a1a);
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    background: rgba(25, 25, 25, 0.8);
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+    margin: 20px;
+}
+
+.form-container {
+    width: 100%;
+}
+
+h1 {
+    color: #00d9ff;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-bottom: 2px solid #00d9ff;
+    color: #ffffff;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+input:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #00d9ff;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #00a6c4;
+    transform: translateY(-2px);
+}
+
+.google-button {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.google-button:hover {
+    background-color: #f1f1f1;
+}
+
+span {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+}
+
+a {
+    color: #00d9ff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: #00a6c4;
+    text-decoration: underline;
+}
